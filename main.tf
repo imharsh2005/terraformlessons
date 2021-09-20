@@ -11,7 +11,7 @@ resource "aws_instance" "example"{
   user_data = <<-EOF
                 #!/bin/bash
                 echo "Hello this is terraform sample" > index.html
-		python3 -m http.server 8000
+		python3 -m http.server "${var.server_port}"
                 EOF
   tags = {
     Name = "Terraform-example"
@@ -52,13 +52,13 @@ resource "aws_security_group" "instance"{
      {
      cidr_blocks      = [ "146.115.148.217/32", ]
      description      = "8000 webserver"
-     from_port        = 8000
+     from_port        = "${var.server_port}"
      ipv6_cidr_blocks = []
      prefix_list_ids  = []
      protocol         = "tcp"
      security_groups  = []
      self             = false
-     to_port          = 8000
+     to_port          = "${var.server_port}"
   }
   ]
 }
